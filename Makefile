@@ -12,7 +12,7 @@ CFLAGS += -Wall -Werror
 NAME=forwarder.out
 LINKS=-lpthread
 
-SRC := main.c res.c io.c
+SRC := main.c res.c io.c net.c
 OBJ := $(SRC:.c=.o)
 
 .PHONY: default clean
