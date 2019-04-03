@@ -7,8 +7,11 @@ else
 	CFLAGS += -DNDEBUG -O3
 endif
 
+SRC_DIR=src
+INC_DIR=include
+
 CC=gcc
-CFLAGS += -Wall -Werror
+CFLAGS += -Wall -Werror -I$(INC_DIR)
 NAME=forwarder.out
 LINKS=-lpthread
 
@@ -20,7 +23,7 @@ OBJ := $(SRC:.c=.o)
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^ $(LINKS)
 
-%.o: %.c
+%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -o $@ -c $^
 
 clean:
