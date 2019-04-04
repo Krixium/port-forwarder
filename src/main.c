@@ -113,7 +113,7 @@ void childRoutine(fwd_path *path)
 
         if (fork())
         {
-            Log("Waiting for data from incoming host ...");
+            Log("Forwarding for data from %s to %s", inet_ntoa(path->in.sin_addr), inet_ntoa(path->out.sin_addr));
             while (1)
             {
                 numRead = recv(inSocket, buffer, READ_BUFFER_SIZE, 0);
@@ -129,7 +129,7 @@ void childRoutine(fwd_path *path)
         }
         else
         {
-            Log("Waiting for data from outgoing host ...");
+            Log("Forwarding for data from %s to %s", inet_ntoa(path->out.sin_addr), inet_ntoa(path->in.sin_addr));
             while (1)
             {
                 numRead = recv(outSocket, buffer, READ_BUFFER_SIZE, 0);
