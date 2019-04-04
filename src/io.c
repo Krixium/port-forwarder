@@ -1,4 +1,4 @@
-#define CONF_FILE "./fowarder.conf"
+#define CONF_FILE "./forwarder.conf"
 #define LINE_BUFFER_SIZE 64
 #define IP_BUFFER_SIZE 16
 
@@ -302,7 +302,7 @@ bool parseConfFileForPaths(fwd_path **paths, int *size)
         // parse the line that was read
         if (!parseLine(lineBuffer, inIp, &inPort, outIp, &outPort))
         {
-            Error("Could not read like, skipping");
+            Error("Could not read line, skipping");
             continue;
         }
 
