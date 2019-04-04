@@ -93,14 +93,14 @@ void childRoutine(fwd_path *path)
         {
             die("No incoming connection");
         }
-        Log("Connection accpeted");
+        Log("Connection accpeted from %s", inet_ntoa(incomingStruct.sin_addr));
 
-        // if (incomingStruct.sin_addr.s_addr != path->in.sin_addr.s_addr)
-        // {
-        //     close(inSocket);
-        //     Error("Invalid incoming address, skipping");
-        //     continue;
-        // }
+        if (incomingStruct.sin_addr.s_addr != path->in.sin_addr.s_addr)
+        {
+            close(inSocket);
+            Error("Invalid incoming address, skipping");
+            continue;
+        }
 
         Log("Connecting to destination host");
         if (!createConnectedSocket(&outSocket, &path->out))
@@ -109,22 +109,20 @@ void childRoutine(fwd_path *path)
         }
 
         close(listenSocket);
-        Log("Connected to destination host, closing listening socket");
+        Log("Connected to destination host %s, closing listening socket", inet_ntoa(path->out.sin_addr));
 
         if (fork())
         {
             Log("Waiting for data from incoming host ...");
             while (1)
             {
-                // numRead = uwuReadAllFromSocket(inSocket, buffer, READ_BUFFER_SIZE);
                 numRead = recv(inSocket, buffer, READ_BUFFER_SIZE, 0);
-                Log("writing data from incoming to outgoing");
                 send(outSocket, buffer, numRead, 0);
 
                 if (numRead <= 0)
                 {
                     close(inSocket);
-                    close(outSocket);
+                    Log("Closing connection to %s", inet_ntoa(path->in.sin_addr));
                     exit(0);
                 }
             }
@@ -135,13 +133,12 @@ void childRoutine(fwd_path *path)
             while (1)
             {
                 numRead = recv(outSocket, buffer, READ_BUFFER_SIZE, 0);
-                Log("writing data from outgoing to incoming");
                 send(inSocket, buffer, numRead, 0);
 
                 if (numRead <= 0)
                 {
-                    close(inSocket);
                     close(outSocket);
+                    Log("Closing connection to %s", inet_ntoa(path->out.sin_addr));
                     exit(0);
                 }
             }
