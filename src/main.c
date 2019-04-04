@@ -95,11 +95,12 @@ void childRoutine(fwd_path *path)
         }
         Log("Connection accpeted");
 
-        if (incomingStruct.sin_addr.s_addr != path->in.sin_addr.s_addr)
-        {
-            Error("Invalid incoming address, skipping");
-            continue;
-        }
+        // if (incomingStruct.sin_addr.s_addr != path->in.sin_addr.s_addr)
+        // {
+        //     close(inSocket);
+        //     Error("Invalid incoming address, skipping");
+        //     continue;
+        // }
 
         Log("Connecting to destination host");
         if (!createConnectedSocket(&outSocket, &path->out))
@@ -133,7 +134,7 @@ void childRoutine(fwd_path *path)
             Log("Waiting for data from outgoing host ...");
             while (1)
             {
-                numRead = recv(inSocket, buffer, READ_BUFFER_SIZE, 0);
+                numRead = recv(outSocket, buffer, READ_BUFFER_SIZE, 0);
                 Log("writing data from outgoing to incoming");
                 send(inSocket, buffer, numRead, 0);
 
