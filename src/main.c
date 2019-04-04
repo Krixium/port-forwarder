@@ -85,6 +85,7 @@ void childRoutine(fwd_path *path)
     }
 
     listen(listenSocket, 5);
+    Log("Listening for connection ...");
 
     while (1)
     {
@@ -92,6 +93,7 @@ void childRoutine(fwd_path *path)
         {
             die("No incoming connection");
         }
+        Log("Connection accpeted");
 
         if (incomingStruct.sin_addr.s_addr != path->in.sin_addr.s_addr)
         {
@@ -99,18 +101,22 @@ void childRoutine(fwd_path *path)
             continue;
         }
 
+        Log("Connecting to destination host");
         if (!createConnectedSocket(&outSocket, &path->out))
         {
             die("Could not connect to outgoing server");
         }
 
         close(listenSocket);
+        Log("Connected to destination host, closing listening socket");
 
         if (fork())
         {
+            Log("Waiting for data from incoming host ...");
             while (1)
             {
                 numRead = uwuReadAllFromSocket(inSocket, buffer, READ_BUFFER_SIZE);
+                Log("writing data from incoming to outgoing");
                 send(outSocket, buffer, numRead, 0);
 
                 if (numRead <= 0)
@@ -123,9 +129,11 @@ void childRoutine(fwd_path *path)
         }
         else
         {
+            Log("Waiting for data from outgoing host ...");
             while (1)
             {
                 numRead = uwuReadAllFromSocket(outSocket, buffer, READ_BUFFER_SIZE);
+                Log("writing data from outgoing to incoming");
                 send(inSocket, buffer, numRead, 0);
 
                 if (numRead <= 0)
