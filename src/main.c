@@ -12,6 +12,27 @@
 
 #include "net.h"
 
+/*--------------------------------------------------------------------------------------------------
+-- FUNCTION:                main
+--
+-- DATE:                    March 20, 2019
+--
+-- REVISIONS:               N/A
+--
+-- DESIGNER:                Benny Wang, William Murpy
+--
+-- PROGRAMMER:              Benny Wang, William Murphy
+--
+-- INTERFACE:               int main(int argc, char *argv[])
+--                              int argc: The number of command line arguments.
+--                              char *argv[]: The command line arguments.
+--
+-- RETURNS:                 The exit code.
+--
+-- NOTES:
+-- The main entry point of the program. Parses the configuration file and then forks a processes for
+-- each connection and allows the child processes to handle the forwarding.
+--------------------------------------------------------------------------------------------------*/
 int main(int argc, char *argv[])
 {
     int *pids;
@@ -63,11 +84,32 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+/*--------------------------------------------------------------------------------------------------
+-- FUNCTION:                childRoutine
+--
+-- DATE:                    April 1, 2019
+--
+-- REVISIONS:               N/A
+--
+-- DESIGNER:                Benny Wang, William Murpy
+--
+-- PROGRAMMER:              Benny Wang, William Murphy
+--
+-- INTERFACE:               void childRoutine(fwd_path *path)
+--                              fwd_path *path: Pointer to struct that contains the in and out structs.
+--
+-- NOTES:
+-- Creates a connection between path.in and path.out and forwrads data between the two. A socket is first
+-- created and listens on path.in.sin_port for connections. The address stored in path.in connects, a
+-- connect call is made to path.out. Once connections are established on in both directions, The process
+-- forks, the parent will block on read and write all data from path.in to path.out, and the child will
+-- read and write all data from path.out to path.in. If either of the connections closes, everything
+-- will close and exit.
+--------------------------------------------------------------------------------------------------*/
 void childRoutine(fwd_path *path)
 {
-    char buffer[READ_BUFFER_SIZE];
-
     int numRead;
+    char buffer[READ_BUFFER_SIZE];
 
     int listenSocket;
     int inSocket;
@@ -145,4 +187,3 @@ void childRoutine(fwd_path *path)
         }
     }
 }
-

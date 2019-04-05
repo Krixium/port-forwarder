@@ -23,7 +23,7 @@
 -- RETURNS:                 1 if the socket was created without error, 0 otherwise.
 --
 -- NOTES:
---                          Creates a TCP socket. The newly created socket is set to reuse.
+-- Creates a TCP socket. The newly created socket is set to reuse.
 --------------------------------------------------------------------------------------------------*/
 int uwuCreateTCPSocket(int *sock)
 {
@@ -61,8 +61,7 @@ int uwuCreateTCPSocket(int *sock)
 -- RETURNS:                 1 if the socket was created and connected without error, 0 otherwise.
 --
 -- NOTES:
---                          Creates a connected TCP socket to address:port and stores the newly
---                          connected socket to sock.
+-- Creates a connected TCP socket to address:port and stores the newly connected socket to sock.
 --------------------------------------------------------------------------------------------------*/
 int createConnectedSocket(int *sock, struct sockaddr_in *addr)
 {
@@ -97,8 +96,8 @@ int createConnectedSocket(int *sock, struct sockaddr_in *addr)
 -- RETURNS:                 1 if the socket was created and bounded without error, 0 otherwise.
 --
 -- NOTES:
---                          Creates a bounded TCP socket on port and stores the newly bounded socket
---                          to sock. The newly created socket is set to reuse.
+-- Creates a bounded TCP socket on port and stores the newly bounded socket to sock. The newly
+-- created socket is set to reuse.
 --------------------------------------------------------------------------------------------------*/
 int uwuCreateBoundSocket(int *sock, const short port)
 {
@@ -141,8 +140,7 @@ int uwuCreateBoundSocket(int *sock, const short port)
 -- RETURNS:                 1 if the new connection was accepted, 0 otherwise.
 --
 -- NOTES:
---                          Accepts a new connection. If client information is not important, NULL
---                          can be passed in for client.
+-- Accepts a new connection. If client information is not important, NULL can be passed in for client.
 --------------------------------------------------------------------------------------------------*/
 int uwuAcceptSocket(const int listenSocket, int *newSocket, struct sockaddr_in *client)
 {
@@ -188,7 +186,7 @@ int uwuAcceptSocket(const int listenSocket, int *newSocket, struct sockaddr_in *
 -- RETURN:                  1 if the socket options were set, 0 otherwise.
 --
 -- NOTES:
---                          Sets the receive timeout and send timeout of a socket.
+-- Sets the receive timeout and send timeout of a socket.
 --------------------------------------------------------------------------------------------------*/
 int uwuSetSocketTimeout(const size_t sec, const size_t usec, const int sock)
 {
