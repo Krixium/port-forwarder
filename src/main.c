@@ -1,3 +1,25 @@
+/*---------------------------------------------------------------------------------------
+-- SOURCE FILE:             res.c
+--
+-- PROGRAM:                 forwarder.out
+--
+-- FUNCTIONS:
+--                          int main(int argc, char *argv[])
+--                          void childRoutine(fwd_path *path)
+--
+-- DATE:                    March 20, 2019
+--
+-- REVISIONS:               N/A
+--
+-- DESIGNERS:               Benny Wang, William Murphy
+--
+-- PROGRAMMERS:             Benny Wang, William Murphy
+--
+-- NOTES:
+-- Main entry point of the main program as well as the main body function of the child
+-- proccesses which handle the network io.
+---------------------------------------------------------------------------------------*/
+
 #define READ_BUFFER_SIZE 65535
 #define LISTEN_TIMEOUT_SECS 60
 #define LISTEN_TIMEOUT_USECS 0

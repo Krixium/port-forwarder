@@ -1,3 +1,29 @@
+/*---------------------------------------------------------------------------------------
+-- SOURCE FILE:             io.c
+--
+-- PROGRAM:                 forwarder.out
+--
+-- FUNCTIONS:
+--                          void logWithLevel(const char *level, const char *format, va_list args)
+--                          void Log(const char *format, ...)
+--                          void Error(const char *format, ...)
+--                          bool parseLine(const char *line, char *inAddr, int *inPort, char *outAddr, int *outPort)
+--                          bool fillAddr(struct sockaddr_in *out, const char *address, const int port)
+--                          bool parseConfFileForPaths(fwd_path **paths, int *size)
+--
+-- DATE:                    April 1, 2019
+--
+-- REVISIONS:               N/A
+--
+-- DESIGNERS:               Benny Wang
+--
+-- PROGRAMMERS:             Benny Wang
+--
+-- NOTES:
+-- Contains all the functions that are used for parsing the configuration file as well as
+-- logging functions.
+---------------------------------------------------------------------------------------*/
+
 #define CONF_FILE "./forwarder.conf"
 #define LINE_BUFFER_SIZE 64
 #define IP_BUFFER_SIZE 16

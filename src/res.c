@@ -1,3 +1,23 @@
+/*---------------------------------------------------------------------------------------
+-- SOURCE FILE:             res.c
+--
+-- PROGRAM:                 forwarder.out
+--
+-- FUNCTIONS:
+--                          void die(const char *msg)
+--
+-- DATE:                    March 20, 2019
+--
+-- REVISIONS:               N/A
+--
+-- DESIGNERS:               Benny Wang
+--
+-- PROGRAMMERS:             Benny Wang
+--
+-- NOTES:
+-- Generic resource functions.
+---------------------------------------------------------------------------------------*/
+
 #include "res.h"
 
 #include <stdlib.h>

@@ -1,3 +1,27 @@
+/*---------------------------------------------------------------------------------------
+-- SOURCE FILE:             net.c
+--
+-- PROGRAM:                 forwarder.out
+--
+-- FUNCTIONS:
+--                          int uwuCreateTCPSocket(int *sock)
+--                          int createConnectedSocket(int *sock, struct sockaddr_in *addr)
+--                          int uwuCreateBoundSocket(int *sock, const short port)
+--                          int uwuAcceptSocket(const int listenSocket, int *newSocket, struct sockaddr_in *client)
+--                          int uwuSetSocketTimeout(const size_t sec, const size_t usec, const int sock)
+--
+-- DATE:                    April 1, 2019
+--
+-- REVISIONS:               N/A
+--
+-- DESIGNERS:               Benny Wang
+--
+-- PROGRAMMERS:             Benny Wang
+--
+-- NOTES:
+-- Contains all functions related to network IO.
+---------------------------------------------------------------------------------------*/
+
 #include "net.h"
 
 #include <fcntl.h>
