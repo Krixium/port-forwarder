@@ -155,7 +155,8 @@ void childRoutine(fwd_path *path)
     {
         if (!uwuAcceptSocket(listenSocket, &inSocket, &incomingStruct))
         {
-            die("No incoming connection");
+            Error("No incoming connection");
+            continue;
         }
         Log("Connection accpeted from %s", inet_ntoa(incomingStruct.sin_addr));
 
@@ -169,13 +170,14 @@ void childRoutine(fwd_path *path)
         Log("Connecting to destination host");
         if (!createConnectedSocket(&outSocket, &path->out))
         {
-            die("Could not connect to outgoing server");
+            close(inSocket);
+            Error("Could not connect to outgoing server");
+            continue;
         }
 
-        close(listenSocket);
-        Log("Connected to destination host %s, closing listening socket", inet_ntoa(path->out.sin_addr));
+        Log("Connected %s to  %s", inet_ntoa(path->in.sin_addr), inet_ntoa(path->out.sin_addr));
 
-        if (fork())
+        if (!fork()) // child
         {
             Log("Forwarding for data from %s to %s", inet_ntoa(path->in.sin_addr), inet_ntoa(path->out.sin_addr));
             while (1)
@@ -191,7 +193,8 @@ void childRoutine(fwd_path *path)
                 }
             }
         }
-        else
+
+        if (!fork()) // child
         {
             Log("Forwarding for data from %s to %s", inet_ntoa(path->out.sin_addr), inet_ntoa(path->in.sin_addr));
             while (1)
