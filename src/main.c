@@ -21,8 +21,6 @@
 ---------------------------------------------------------------------------------------*/
 
 #define READ_BUFFER_SIZE 65535
-#define LISTEN_TIMEOUT_SECS 60
-#define LISTEN_TIMEOUT_USECS 0
 
 #include "main.h"
 
@@ -141,11 +139,6 @@ void childRoutine(fwd_path *path)
     if (!uwuCreateBoundSocket(&listenSocket, ntohs(path->in.sin_port)))
     {
         die("Could not bind incoming socket");
-    }
-
-    if (!uwuSetSocketTimeout(LISTEN_TIMEOUT_SECS, LISTEN_TIMEOUT_USECS, listenSocket))
-    {
-        die("Could not set socket timeout for listen socket");
     }
 
     listen(listenSocket, 5);
